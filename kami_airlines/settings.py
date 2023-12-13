@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'kami_workforce_airlines_app',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +78,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kami_airlines_db',
-        'USER': 'kami',
-        'PASSWORD': 'kami',
+        'USER': 'sandrabayabos',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 
