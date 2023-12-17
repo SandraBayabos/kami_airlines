@@ -3,7 +3,7 @@ from math import log
 
 
 class Airplane(models.Model):
-    airplane_id = models.IntegerField(primary_key=True)  # user defined id
+    airplane_id = models.IntegerField(primary_key=True, unique=True)  # user defined id
     passenger_count = models.IntegerField()  # user defined passenger assumption
 
     @property
