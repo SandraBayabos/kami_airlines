@@ -1,5 +1,6 @@
 asgiref==3.7.2
 cffi @ file:///private/tmp/cffi-20231211-40239-j25k6o/cffi-1.16.0
+coverage==7.3.3
 Django==5.0
 djangorestframework==3.14.0
 docutils @ file:///private/tmp/docutils-20231211-36728-9mhbst/docutils-0.20.1
