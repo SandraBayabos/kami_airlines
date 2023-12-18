@@ -60,7 +60,9 @@ GET http://localhost:8000/airlines/api/airplanes/
 GET http://localhost:8000/airlines/api/airplanes/2/
 
 - Bulk Create Airplanes
-POST
+POST http://localhost:8000/airlines/api/airplanes/
+
+Request Body:
 
 [
     {"airplane_id": 1, "passenger_count": 100},
@@ -75,7 +77,7 @@ POST
     {"airplane_id": 10, "passenger_count": 170}
 ]
 
-- Example Response:
+- Example Response Body:
 
 [
     {
@@ -140,6 +142,18 @@ POST
     }
 ]
 
+- Update an Airplane's passenger_count
+PATCH http://localhost:8000/airlines/api/airplanes/2/
+
+Request Body:
+
+{
+    "passenger_count":90
+}
+
+- Delete an Airplane
+DELETE http://localhost:8000/airlines/api/airplanes/2/
+
 ```
 
 #### Example Curl Commands in Terminal
@@ -183,7 +197,7 @@ curl -X PATCH http://localhost:8000/airlines/api/airplanes/3/ \
 
 ### 7. Tests
 
-Testing has been implemented using `django tests`
+Testing has been implemented using `django tests` and can be run with the commaned `python3 manage.py test`
 
 The latest Coverage Report is as follows:
 
