@@ -35,7 +35,7 @@ class AirplaneTestCase(TestCase):
 
     def test_create_airplane(self) -> None:  # test create 10 airplanes
         data: str = json.dumps([{'airplane_id': 300, 'passenger_count': 300}, {'airplane_id': 400, 'passenger_count': 400}, {'airplane_id': 500, 'passenger_count': 500}, {'airplane_id': 600, 'passenger_count': 600}, {'airplane_id': 700, 'passenger_count': 700}, {'airplane_id': 800, 'passenger_count': 800},
-                           {'airplane_id': 900, 'passenger_count': 900}, {'airplane_id': 1000, 'passenger_count': 1000}, {'airplane_id': 1100, 'passenger_count': 1100}, {'airplane_id': 1200, 'passenger_count': 1200}])
+                                {'airplane_id': 900, 'passenger_count': 900}, {'airplane_id': 1000, 'passenger_count': 1000}, {'airplane_id': 1100, 'passenger_count': 1100}, {'airplane_id': 1200, 'passenger_count': 1200}])
         response = self.client.post(
             '/airlines/api/airplanes/', data, content_type='application/json')
         self.assertEqual(response.status_code, 201)
@@ -62,7 +62,7 @@ class AirplaneTestCase(TestCase):
 
     def test_create_airplane_with_existing_airplane_id(self) -> None:
         data: str = json.dumps([{'airplane_id': 100, 'passenger_count': 100},
-                           {'airplane_id': 1300, 'passenger_count': 1300}])
+                                {'airplane_id': 1300, 'passenger_count': 1300}])
         response = self.client.post(
             '/airlines/api/airplanes/', data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -82,9 +82,33 @@ class AirplaneTestCase(TestCase):
         self.assertEqual(response.data['passenger_count'], 300)
         self.assertEqual(response.data['fuel_consumption_per_minute'], 4.98)
         self.assertEqual(response.data['max_flight_time'], 4016.06)
-        
+
     def test_delete_airplane(self) -> None:
         response = self.client.delete('/airlines/api/airplanes/100/')
         self.assertEqual(response.status_code, 204)
         self.assertEqual(Airplane.objects.count(), 1)
         self.assertEqual(Airplane.objects.filter(airplane_id=100).count(), 0)
+
+    def test_create_airplane_with_no_passenger_count(self) -> None:
+        data: str = json.dumps([{'airplane_id': 1300}])
+        response = self.client.post(
+            '/airlines/api/airplanes/', data, content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        error_message_found = any(
+            'This field is required.' in error_detail['passenger_count']
+            for error_detail in response.data
+            if 'passenger_count' in error_detail
+        )
+        self.assertTrue(error_message_found)
+
+    def test_create_airplane_with_zero_passenger_count(self) -> None:
+        data: str = json.dumps([{'airplane_id': 1300, 'passenger_count': 0}])
+        response = self.client.post(
+            '/airlines/api/airplanes/', data, content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        error_message_found = any(
+            'passenger_count must be positive' in error_detail['passenger_count']
+            for error_detail in response.data
+            if 'passenger_count' in error_detail
+        )
+        self.assertTrue(error_message_found)
