@@ -53,6 +53,92 @@ REST APIs can be tested using Postman or curl commands as follows:
 #### Example Data for Postman:
 
 ```
+- Get All Airplanes
+GET http://localhost:8000/airlines/api/airplanes/
+
+- Get One Airplane
+GET http://localhost:8000/airlines/api/airplanes/2/
+
+- Bulk Create Airplanes
+POST
+
+[
+    {"airplane_id": 1, "passenger_count": 100},
+    {"airplane_id": 2, "passenger_count": 200},
+    {"airplane_id": 3, "passenger_count": 150},
+    {"airplane_id": 4, "passenger_count": 120},
+    {"airplane_id": 5, "passenger_count": 180},
+    {"airplane_id": 6, "passenger_count": 160},
+    {"airplane_id": 7, "passenger_count": 140},
+    {"airplane_id": 8, "passenger_count": 110},
+    {"airplane_id": 9, "passenger_count": 130},
+    {"airplane_id": 10, "passenger_count": 170}
+]
+
+- Example Response:
+
+[
+    {
+        "airplane_id": 1,
+        "passenger_count": 100,
+        "fuel_consumption_per_minute": 0.01,
+        "max_flight_time": 20000.0
+    },
+    {
+        "airplane_id": 2,
+        "passenger_count": 200,
+        "fuel_consumption_per_minute": 0.87,
+        "max_flight_time": 459.77
+    },
+    {
+        "airplane_id": 3,
+        "passenger_count": 150,
+        "fuel_consumption_per_minute": 1.18,
+        "max_flight_time": 508.47
+    },
+    {
+        "airplane_id": 4,
+        "passenger_count": 120,
+        "fuel_consumption_per_minute": 1.4,
+        "max_flight_time": 571.43
+    },
+    {
+        "airplane_id": 5,
+        "passenger_count": 180,
+        "fuel_consumption_per_minute": 1.75,
+        "max_flight_time": 571.43
+    },
+    {
+        "airplane_id": 6,
+        "passenger_count": 160,
+        "fuel_consumption_per_minute": 1.89,
+        "max_flight_time": 634.92
+    },
+    {
+        "airplane_id": 7,
+        "passenger_count": 140,
+        "fuel_consumption_per_minute": 2.0,
+        "max_flight_time": 700.0
+    },
+    {
+        "airplane_id": 8,
+        "passenger_count": 110,
+        "fuel_consumption_per_minute": 2.08,
+        "max_flight_time": 769.23
+    },
+    {
+        "airplane_id": 9,
+        "passenger_count": 130,
+        "fuel_consumption_per_minute": 2.23,
+        "max_flight_time": 807.17
+    },
+    {
+        "airplane_id": 10,
+        "passenger_count": 170,
+        "fuel_consumption_per_minute": 2.42,
+        "max_flight_time": 826.45
+    }
+]
 
 ```
 
