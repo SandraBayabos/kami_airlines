@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from .models import Airplane
 from .serializers import AirplaneSerializer
+from typing import List, Dict
 
 
 class AirplaneAPIView(APIView):
@@ -12,14 +13,15 @@ class AirplaneAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request: Request) -> Response:
-        unique_airplane_data = [item['airplane_id'] for item in request.data]
+        unique_airplane_data: List[int] = [
+            item['airplane_id'] for item in request.data]
 
         if len(unique_airplane_data) != len(set(unique_airplane_data)):
             return Response({"error": "One or more airplane_id already exists"}, status=400)
         serializer = AirplaneSerializer(data=request.data, many=True)
         if serializer.is_valid():
-            airplanes = serializer.save()
-            response = [
+            airplanes: List[Airplane] = serializer.save()
+            response: List[Dict] = [
                 {
                     "airplane_id": airplane.airplane_id,
                     "passenger_count": airplane.passenger_count,
@@ -46,7 +48,7 @@ class AirplaneAPIView(APIView):
 
             print("Request Data:", request.data)
             if airplane:
-                response = {
+                response: List[Dict] = {
                     "airplane_id": airplane.airplane_id,
                     "passenger_count": airplane.passenger_count,
                     "fuel_consumption_per_minute": airplane.fuel_consumption_per_minute,
