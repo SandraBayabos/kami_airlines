@@ -82,3 +82,9 @@ class AirplaneTestCase(TestCase):
         self.assertEqual(response.data['passenger_count'], 300)
         self.assertEqual(response.data['fuel_consumption_per_minute'], 4.98)
         self.assertEqual(response.data['max_flight_time'], 4016.06)
+        
+    def test_delete_airplane(self) -> None:
+        response = self.client.delete('/airlines/api/airplanes/100/')
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(Airplane.objects.count(), 1)
+        self.assertEqual(Airplane.objects.filter(airplane_id=100).count(), 0)

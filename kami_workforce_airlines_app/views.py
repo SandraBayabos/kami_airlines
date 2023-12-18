@@ -7,9 +7,17 @@ from typing import List, Dict
 
 
 class AirplaneAPIView(APIView):
-    def get(self, request: Request) -> Response:
-        airplanes = Airplane.objects.all()
-        serializer = AirplaneSerializer(airplanes, many=True)
+    def get(self, request: Request, airplane_id: int = None) -> Response:
+        if airplane_id is not None:
+            try:
+                airplane = Airplane.objects.get(airplane_id=airplane_id)
+            except Airplane.DoesNotExist:
+                return Response({"error": f"Airplane with your airplane_id {airplane_id} does not exist"}, status=404)
+            serializer = AirplaneSerializer(airplane)
+            return Response(serializer.data)
+        else:
+            airplanes = Airplane.objects.all()
+            serializer = AirplaneSerializer(airplanes, many=True)
         return Response(serializer.data)
 
     def post(self, request: Request) -> Response:
@@ -59,3 +67,11 @@ class AirplaneAPIView(APIView):
 
         print("Serializer Errors:", serializer.errors)
         return Response(serializer.errors, status=400)
+
+    def delete(self, request: Request, airplane_id: int) -> Response:
+        try:
+            airplane = Airplane.objects.get(airplane_id=airplane_id)
+        except Airplane.DoesNotExist:
+            return Response({"error": "airplane_id does not exist"}, status=404)
+        airplane.delete()
+        return Response(status=204)
