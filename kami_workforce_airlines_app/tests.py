@@ -8,8 +8,6 @@ class AirplaneTestCase(TestCase):
     def setUp(self):
         Airplane.objects.create(airplane_id=100, passenger_count=100)
         Airplane.objects.create(airplane_id=200, passenger_count=200)
-        Airplane.objects.create(airplane_id=300, passenger_count=300)
-        Airplane.objects.create(airplane_id=400, passenger_count=400)
 
     def test_airplane_fuel_tank_capacity(self):
         airplane1 = Airplane.objects.get(airplane_id=100)
@@ -32,27 +30,38 @@ class AirplaneTestCase(TestCase):
     def test_get_all_airplanes(self):
         response = self.client.get('/airlines/api/airplanes/')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 4)
+        self.assertEqual(len(response.data), 2)
 
-    def test_create_airplane(self):
-        data = json.dumps([{'airplane_id': 600, 'passenger_count': 600}, {'airplane_id': 700, 'passenger_count': 700}, {'airplane_id': 800, 'passenger_count': 800},
-                {'airplane_id': 900, 'passenger_count': 900}])
+    def test_create_airplane(self):  # create 10 airplanes
+        data = json.dumps([{'airplane_id': 300, 'passenger_count': 300}, {'airplane_id': 400, 'passenger_count': 400}, {'airplane_id': 500, 'passenger_count': 500}, {'airplane_id': 600, 'passenger_count': 600}, {'airplane_id': 700, 'passenger_count': 700}, {'airplane_id': 800, 'passenger_count': 800},
+                           {'airplane_id': 900, 'passenger_count': 900}, {'airplane_id': 1000, 'passenger_count': 1000}, {'airplane_id': 1100, 'passenger_count': 1100}, {'airplane_id': 1200, 'passenger_count': 1200}])
         response = self.client.post(
             '/airlines/api/airplanes/', data, content_type='application/json')
-        print("Response Data:", response.data)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data[0]['airplane_id'], 600)
-        self.assertEqual(response.data[0]['passenger_count'], 600)
-        self.assertEqual(response.data[1]['airplane_id'], 700)
-        self.assertEqual(response.data[1]['passenger_count'], 700)
-        self.assertEqual(response.data[2]['airplane_id'], 800)
-        self.assertEqual(response.data[2]['passenger_count'], 800)
-        self.assertEqual(response.data[3]['airplane_id'], 900)
-        self.assertEqual(response.data[3]['passenger_count'], 900)
+        self.assertEqual(response.data[0]['airplane_id'], 300)
+        self.assertEqual(response.data[0]['passenger_count'], 300)
+        self.assertEqual(response.data[1]['airplane_id'], 400)
+        self.assertEqual(response.data[1]['passenger_count'], 400)
+        self.assertEqual(response.data[2]['airplane_id'], 500)
+        self.assertEqual(response.data[2]['passenger_count'], 500)
+        self.assertEqual(response.data[3]['airplane_id'], 600)
+        self.assertEqual(response.data[3]['passenger_count'], 600)
+        self.assertEqual(response.data[4]['airplane_id'], 700)
+        self.assertEqual(response.data[4]['passenger_count'], 700)
+        self.assertEqual(response.data[5]['airplane_id'], 800)
+        self.assertEqual(response.data[5]['passenger_count'], 800)
+        self.assertEqual(response.data[6]['airplane_id'], 900)
+        self.assertEqual(response.data[6]['passenger_count'], 900)
+        self.assertEqual(response.data[7]['airplane_id'], 1000)
+        self.assertEqual(response.data[7]['passenger_count'], 1000)
+        self.assertEqual(response.data[8]['airplane_id'], 1100)
+        self.assertEqual(response.data[8]['passenger_count'], 1100)
+        self.assertEqual(response.data[9]['airplane_id'], 1200)
+        self.assertEqual(response.data[9]['passenger_count'], 1200)
 
     def test_create_airplane_with_existing_airplane_id(self):
-        data = json.dumps([{'airplane_id': 300, 'passenger_count': 300},
-                {'airplane_id': 400, 'passenger_count': 400}])
+        data = json.dumps([{'airplane_id': 100, 'passenger_count': 100},
+                           {'airplane_id': 1300, 'passenger_count': 1300}])
         response = self.client.post(
             '/airlines/api/airplanes/', data, content_type='application/json')
         self.assertEqual(response.status_code, 400)

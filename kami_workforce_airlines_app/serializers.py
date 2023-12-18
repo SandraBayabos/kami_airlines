@@ -11,26 +11,6 @@ class AirplaneSerializer(serializers.Serializer):
         instance = Airplane(**validated_data)
         instance.save()
         return instance
-    
-    # class Meta:
-    #     model = Airplane
-    #     fields = ("airplane_id", "passenger_count")
-
-    # def create(self, validated_data_list: List[Dict]):
-    #     print("Entering create method:", type(validated_data_list), validated_data_list)
-    #     airplanes = []
-    #     for data in validated_data_list:
-    #         airplane = Airplane.objects.create(**data)
-    #         airplanes.append(airplane)
-    #     return airplanes
-        # print("Entering create method:", type(validated_data_list), validated_data_list)
-        # airplanes = []
-        # for validated_data in validated_data_list:
-        #     validated_data['passenger_count'] = validated_data.get(
-        #         'passenger_count', 1)
-        #     airplane = Airplane.objects.create(**validated_data)
-        #     airplanes.append(airplane)
-        # return airplanes
 
     def update(self, instance, validated_data):
         passenger_count = validated_data.get('passenger_count')
