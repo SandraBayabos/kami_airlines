@@ -56,7 +56,7 @@ REST APIs can be tested using Postman or curl commands as follows:
 
 ```
 
-## Example Curl Commands in Terminal
+#### Example Curl Commands in Terminal
 
 #### Get All Airplanes
 
