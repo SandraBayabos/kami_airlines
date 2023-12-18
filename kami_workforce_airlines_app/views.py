@@ -27,8 +27,10 @@ class AirplaneAPIView(APIView):
                     "max_flight_time": airplane.max_flight_time,
                 } for airplane in airplanes
             ]
+            print("Response:", response)
             return Response(response, status=201)
         else:
+            print("Serializer Errors:", serializer.errors)
             return Response(serializer.errors, status=400)
 
     def patch(self, request: Request, airplane_id: int) -> Response:
@@ -43,7 +45,6 @@ class AirplaneAPIView(APIView):
             airplane = serializer.update(airplane, request.data)
 
             print("Request Data:", request.data)
-            print("Updated Airplane Data:", airplane)
             if airplane:
                 response = {
                     "airplane_id": airplane.airplane_id,
