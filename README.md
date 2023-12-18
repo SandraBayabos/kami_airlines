@@ -1,4 +1,5 @@
 # KAMI Airlines
+Assignment: To create and submit a working digital version of the aircraft passenger capacity issue, KAMI Airlines, along with instructions for the interviewer to run the code.
 
 ## Requirements:
 
