@@ -13,7 +13,7 @@ Follow these steps to get your environment set up:
 ### 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/your-project-name.git
+git clone https://github.com/SandraBayabos/kami_airlines.git
 cd kami_airlines
 ```
 
