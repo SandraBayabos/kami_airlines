@@ -20,14 +20,23 @@ class Airplane(models.Model):
         return round(self.fuel_tank_capacity / self.fuel_consumption_per_minute, 2)
 
     def save(self, *args, **kwargs):
-        if self.airplane_id <= 0:
-            raise ValueError("airplane_id must be positive")
+        if self.airplane_id <= 1:
+            raise ValueError("airplane_id must be greater than 1")
+        if self.passenger_count is None:
+            self.passenger_count = 1
         if self.passenger_count <= 0:
             raise ValueError("passenger_count must be positive")
-        if self.fuel_consumption_per_minute <= 0:
+        self._recalculate_fuel_consumption_per_minute_and_max_flight_time()
+
+        if self.fuel_consumption_per_minute <= 0 or self.max_flight_time <= 0:
             raise ValueError(
-                "fuel_consumption_per_minute must be positive. Ensure your passenger_count and airplane_id values are not too small.")
-        if self.max_flight_time <= 0:
-            raise ValueError(
-                "max_flight_time must be positive. Ensure your passenger_count and airplane_id values are not too small.")
+                "Calculated fuel consumption per minute and max flight time must be positive."
+            )
         super().save(*args, **kwargs)
+        
+    def __str__(self):
+        return f"Airplane ID: {self.airplane_id}, Passenger Count: {self.passenger_count}"
+
+    def _recalculate_fuel_consumption_per_minute_and_max_flight_time(self):
+        self._fuel_consumption_per_minute = self.fuel_consumption_per_minute
+        self._max_flight_time = self.max_flight_time

@@ -14,7 +14,6 @@ Follow these steps to get your environment set up:
 ```
 git clone https://github.com/your-username/your-project-name.git
 cd kami_airlines
-
 ```
 
 ### 2. Set up a virtual environment (the following example uses `conda`)
