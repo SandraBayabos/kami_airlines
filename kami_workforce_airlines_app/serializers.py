@@ -6,7 +6,7 @@ from typing import List, Dict
 class AirplaneSerializer(serializers.Serializer):
     airplane_id = serializers.IntegerField()
     passenger_count = serializers.IntegerField()
-    
+
     def create(self, validated_data):
         instance = Airplane(**validated_data)
         instance.save()
@@ -32,9 +32,10 @@ class AirplaneSerializer(serializers.Serializer):
             raise serializers.ValidationError("airplane_id must be positive")
         return value
 
-    # def validate_passenger_count(self, value):
-    #     if value is None:
-    #         print("passenger_count is None")
-    #     if value <= 0:
-    #         raise serializers.ValidationError(
-    #             "passenger_count must be positive")
+    def validate_passenger_count(self, value):
+        if value is None:
+            raise serializers.ValidationError("passenger_count cannot be null")
+        if value < 1:
+            raise serializers.ValidationError(
+                "passenger_count must be positive")
+        return value

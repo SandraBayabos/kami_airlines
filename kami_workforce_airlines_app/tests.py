@@ -32,7 +32,7 @@ class AirplaneTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 2)
 
-    def test_create_airplane(self):  # create 10 airplanes
+    def test_create_airplane(self):  # test create 10 airplanes
         data = json.dumps([{'airplane_id': 300, 'passenger_count': 300}, {'airplane_id': 400, 'passenger_count': 400}, {'airplane_id': 500, 'passenger_count': 500}, {'airplane_id': 600, 'passenger_count': 600}, {'airplane_id': 700, 'passenger_count': 700}, {'airplane_id': 800, 'passenger_count': 800},
                            {'airplane_id': 900, 'passenger_count': 900}, {'airplane_id': 1000, 'passenger_count': 1000}, {'airplane_id': 1100, 'passenger_count': 1100}, {'airplane_id': 1200, 'passenger_count': 1200}])
         response = self.client.post(
