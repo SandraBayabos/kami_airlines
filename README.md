@@ -50,7 +50,7 @@ python3 manage.py runserver
 
 REST APIs can be tested using Postman or curl commands as follows:
 
-## Example Data for Postman:
+#### Example Data for Postman:
 
 ```
 
@@ -58,17 +58,17 @@ REST APIs can be tested using Postman or curl commands as follows:
 
 ## Example Curl Commands in Terminal
 
-# Get All Airplanes
+#### Get All Airplanes
 
 - `GET /airlines/api/airplanes/`
 - Example Request: `curl http://localhost:8000/airlines/api/airplanes/`
 
-# Get One Airplane
+#### Get One Airplane
 
 - `GET /airlines/api/airplanes/{airplane_id}/`
 - Example Request: `http://localhost:8000/airlines/api/airplanes/2/`
 
-# Create New Airplanes (Bulk Create since assignment requires bulk input of up to 10 airplanes)
+#### Create New Airplanes (Bulk Create since assignment requires bulk input of up to 10 airplanes)
 
 - `POST /airlines/api/airplanes/`
 - Example Request:
@@ -79,7 +79,7 @@ curl -X POST http://localhost:8000/airlines/api/airplanes/ \
      -d '[{"airplane_id": 3, "passenger_count": 150}, {"airplane_id": 4, "passenger_count": 200}]'
 ```
 
-# Update an Airplane (assuming only passenger_count will be updated)
+#### Update an Airplane (assuming only passenger_count will be updated)
 
 - `PATCH /airlines/api/airplanes/{airplane_id}/`
 - Example Request:
@@ -90,7 +90,7 @@ curl -X PATCH http://localhost:8000/airlines/api/airplanes/3/ \
      -d '{"passenger_count": 180}'
 ```
 
-# Delete an Airplane
+#### Delete an Airplane
 
 - `DELETE /airlines/api/airplanes/{airplane_id}`
 - Exmaple Request: `curl -X DELETE http://localhost:8000/airlines/api/airplanes/2/`
