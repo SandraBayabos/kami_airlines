@@ -1,6 +1,6 @@
 from django.forms import ValidationError
 from rest_framework import serializers
-from .models import Airplane
+from .models import Airplane, FlightLog
 from typing import List, Dict
 
 
@@ -40,3 +40,16 @@ class AirplaneSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 "passenger_count must be positive")
         return value
+    
+class FlightLogSerializer(serializers.Serializer):
+    airplane_id = serializers.IntegerField()
+    date = serializers.DateField()
+    duration = serializers.FloatField()
+    departure_airport = serializers.CharField(max_length=100)
+    arrival_airport = serializers.CharField(max_length=100)
+    created_at = serializers.DateTimeField()
+    
+    def create(self, validated_data: Dict[str, int]):
+        instance = FlightLog(**validated_data)
+        instance.save()
+        return instance

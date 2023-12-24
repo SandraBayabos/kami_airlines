@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from .models import Airplane
-from .serializers import AirplaneSerializer
+from .models import Airplane, FlightLog
+from .serializers import AirplaneSerializer, FlightLogSerializer
 from typing import List, Dict
 
 
@@ -75,3 +75,42 @@ class AirplaneAPIView(APIView):
             return Response({"error": "airplane_id does not exist"}, status=404)
         airplane.delete()
         return Response(status=204)
+
+
+class FlightLogAPIView(APIView):
+    def get(self, request: Request, airplane_id: int = None) -> Response:
+        if airplane_id is not None:
+            try:
+                flight_log = FlightLog.objects.get(airplane_id=airplane_id)
+            except FlightLog.DoesNotExist:
+                return Response({"error": f"FlightLog with your airplane_id {airplane_id} does not exist"}, status=404)
+            serializer = FlightLogSerializer(flight_log)
+            return Response(serializer.data)
+        else:
+            flight_logs = FlightLog.objects.all()
+            serializer = FlightLogSerializer(flight_logs, many=True)
+        return Response(serializer.data)
+
+    def post(self, request: Request, airplane_id: int) -> Response:
+        try:
+            airplane = Airplane.objects.get(airplane_id=airplane_id)
+        except Airplane.DoesNotExist:
+            return Response({"error": "airplane_id does not exist"}, status=404)
+        serializer = FlightLogSerializer(data=request.data)
+        if serializer.is_valid():
+            flight_log: FlightLog = serializer.save()
+            response: Dict = [
+                {
+                    "airplane_id": flight_log.airplane_id,
+                    "date": flight_log.date,
+                    "duration": flight_log.duration,
+                    "departure_airport": flight_log.departure_airport,
+                    "arrival_airport": flight_log.arrival_airport,
+                    "created_at": flight_log.created_at,
+                }
+            ]
+            print("Response:", response)
+            return Response(response, status=201)
+        else:
+            print("Serializer Errors:", serializer.errors)
+            return Response(serializer.errors, status=400)

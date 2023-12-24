@@ -47,3 +47,15 @@ class Airplane(models.Model):
     def _recalculate_fuel_consumption_per_minute_and_max_flight_time(self):
         self._fuel_consumption_per_minute = self.fuel_consumption_per_minute
         self._max_flight_time = self.max_flight_time
+
+
+class FlightLog(models.Model):
+    airplane = models.ForeignKey(Airplane, on_delete=models.CASCADE)
+    date = models.DateField()
+    duration = models.FloatField()
+    departure_airport = models.CharField(max_length=100)
+    arrival_airport = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Airplane ID: {self.airplane.airplane_id}, Flight Time: {self.flight_time}, Fuel Consumption: {self.fuel_consumption}, Fuel Left: {self.fuel_left}, Created At: {self.created_at}"
